@@ -30,9 +30,9 @@ Minifier.minifyFiles('foo.mask', '/release/foo.mask');
 
 Use this as a Plugin for `io.File.read` to minify Mask markup
 
-- when building Single-Page Application with the [Atma.Toolkit](https://github.com/atmajs/Atma.Toolkit), all the templates are embedded into the resulting output html file.
+- when building Single-Page Application with the [Atma.Toolkit](https://github.com/atmajs/Atma.Toolkit), all the templates are embedded **and minified** into the resulting output html file.
 
-- when building Atma Server Application, all templates are combined into single html file for each Page ID
+- when building Atma Server Application, all templates are **minified** and combined into single html file for each Page ID
 
 
 ###### Install plugin localy (for single project)
