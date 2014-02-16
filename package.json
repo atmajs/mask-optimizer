@@ -9,6 +9,10 @@
         "test": "node_modules/.bin/atma test test/**.test"
     },
 
+     "devDependencies": {
+        "atma": ">0.9.30"
+    },
+
     "dependencies": {
         "atma-libs": ">0.0.0"
     }
