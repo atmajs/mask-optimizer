@@ -1,7 +1,7 @@
-var atma;
-// var atma = global;
-// if (atma.mask == null)
-// 	atma = global.atma;
+
+var atma = global;
+ if (atma.mask == null)
+ 	atma = global.atma;
 if (atma == null || atma.mask == null)
 	atma = require('atma-libs/exports');
 
