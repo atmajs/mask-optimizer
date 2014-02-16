@@ -1,0 +1,1 @@
+.foo>if(user){span>'Hello'b>'User'}

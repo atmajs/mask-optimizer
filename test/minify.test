@@ -1,0 +1,16 @@
+
+var M = require('../module.js');
+
+UTest({
+	minify: function(){
+
+		var path_ORIG = 'test/tmpl/template.mask',
+			path_ORIG_TEST = 'test/tmpl/template.min.mask',
+			path_OUTPUT = 'test/test.mask'
+			;
+
+		M.minifyFiles(path_ORIG, path_OUTPUT);
+
+		eq(io.File.read(path_OUTPUT), io.File.read(path_ORIG_TEST));
+	}
+});

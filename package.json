@@ -1,0 +1,15 @@
+{
+    "name": "mask-minify",
+    "version": "0.0.5",
+    "description": "MaskJS Minifier",
+    "author": "Alexander Kit (alex.kit@atmajs.com)",
+    "main": "module.js",
+    "license": "MIT",
+    "scripts": {
+        "test": "node_modules/.bin/atma test test/**.test"
+    },
+
+    "dependencies": {
+        "atma": ">0.0.0"
+    }
+}
