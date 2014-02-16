@@ -1,6 +1,6 @@
 {
     "name": "mask-minify",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "MaskJS Minifier",
     "author": "Alexander Kit (alex.kit@atmajs.com)",
     "main": "module.js",
@@ -8,11 +8,9 @@
     "scripts": {
         "test": "node_modules/.bin/atma test test/**.test"
     },
-
-     "devDependencies": {
+    "devDependencies": {
         "atma": ">0.9.30"
     },
-
     "dependencies": {
         "atma-libs": ">0.0.0"
     }

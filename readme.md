@@ -3,6 +3,23 @@ Minify Mask Templates
 
 [![Build Status](https://travis-ci.org/atmajs/mask-minify.png?branch=master)](https://travis-ci.org/atmajs/mask-minify)
 
+##### Example
+
+```sass
+div.fooClass {
+	if (user) {
+		div {
+			i > 'User '
+			el {
+				'~[user]'
+			}
+		}
+	}
+}
+```
+```sass
+.fooClass>if(user)>div{i>'User 'el>'~[user]'}
+```
 
 ##### Node.js
 
