@@ -1,0 +1,3 @@
+define foo {
+	h4 .foo > 'Lorem Ipsum'
+}

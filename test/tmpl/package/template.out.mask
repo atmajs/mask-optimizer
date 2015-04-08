@@ -1,0 +1,11 @@
+module path='/test/tmpl/package/foo.mask' {
+    define foo {
+        h4 .foo > 'Lorem Ipsum'
+    }
+}
+
+import foo from './foo.mask';
+import * as config from './config.json';
+
+header > h4 > '~[config.name]';
+section > foo;

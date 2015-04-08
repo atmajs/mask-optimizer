@@ -1,6 +1,5 @@
-
 if (typeof include === 'undefined' ) 
-	throw new Error('<atma-traceur> should be loaded by the `atma` module.');
+	throw new Error('<atma-mask-optimize> should be loaded by the `atma` module.');
 
 
 
@@ -32,17 +31,6 @@ if (global.io && io.File) {
 		.registerExtensions(obj_setProperty({}, 'mask', [ 'mask:read' ]))
 		;
 }
-
-// `IncludeJS` extension
-include.cfg({
-	loader: obj_setProperty({}, 'mask', {
-		
-		process: function(source, resource){
-			
-			return traceur_compile(source, new net.Uri(resource.url)).js;
-		}
-	})
-});
 
 // Http
 var HttpHandler = Class({

@@ -1,0 +1,41 @@
+var Optimizer = require('../lib/optimizer.js');
+var mask = require('maskjs');
+
+UTest({
+	'minify file' () {
+		
+		var path_ORIG = 'test/tmpl/minify/template.mask',
+			path_ORIG_TEST = 'test/tmpl/minify/template.out.mask'
+			;
+
+		return Optimizer
+			.processFile(path_ORIG, { minify: true })
+			.done(pckg => {
+				eq_(pckg.mask.trim(), io.File.read(path_ORIG_TEST).trim());
+			});
+	},
+	'build package' () {
+		return Optimizer
+			.processFile('/test/tmpl/package/template.mask', { minify: false })
+			.done(pckg => {
+				var expect = io.File.read('test/tmpl/package/template.out.mask');
+				eq_(pckg.mask, mask.stringify(expect, 4));
+			});
+	},
+	'!preprocess scripts and styles' () {
+		// via mask
+		mask.cfg('preprocessor.style', function(str){
+			return str.replace('green', 'red');
+		});
+		// via Optimizer itself
+		Optimizer.cfg('preprocessor.script', function(str){
+			return str.replace('10', '20');
+		});
+		return Optimizer
+			.processFile('/test/tmpl/preprocess/template.mask', { minify: false })
+			.done(pckg => {
+				var expect = io.File.read('test/tmpl/preprocess/template.out.mask');
+				eq_(pckg.mask, mask.stringify(expect, 4));
+			});
+	}
+});

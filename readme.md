@@ -1,45 +1,75 @@
-Minify Mask Templates
+Minify, Combine, Optimize Mask Templates
 -----
 
-[![Build Status](https://travis-ci.org/atmajs/mask-minify.png?branch=master)](https://travis-ci.org/atmajs/mask-minify)
+[![Build Status](https://travis-ci.org/atmajs/mask-optimizer.png?branch=master)](https://travis-ci.org/atmajs/mask-optimizer)
 
-##### Example
+#### What you get?
 
-```sass
+##### Minifier
+```mask
 div.fooClass {
 	if (user) {
 		div {
 			i > 'User '
-			el {
+			foo {
 				'~[user]'
 			}
 		}
 	}
 }
 ```
-```sass
-.fooClass>if(user)>div{i>'User 'el>'~[user]'}
+```mask
+.fooClass>if(user)>div{i>'User 'foo>'~[user]'}
+```
+##### Builder
+```mask
+import foo from 'foo.mask';
+footer > foo;
+```
+```mask
+module path='foo.mask' {
+	define foo {
+		span > 'Lorem Ipsum'
+	}
+}
+import foo from 'foo.mask';
+footer > foo;
+```
+##### Custom optimizations and preprocessors
+Optimizer itself should be defined in settings so that this library runs all optimizers via the template. For Instance `markdown` plugin can convert Markdown markup to html for better client performance.
+```mask
+section > :md > """
+	### Hello
+	_Baz_
+"""
+```
+```mask
+section > :html > """
+	<h6>Hello</h6>
+	<i>Baz</i>
+"""
 ```
 
-##### Node.js
+
+### Node.js
 
 ```
-npm install mask-minify
+npm install mask-optimizer
 ```
 
 ```javascript
-var Minifier = require('mask-minify');
+var Optimizer = require('mask-optimizer');
 
 // template string
-var minified = Minifier.minify(template);
+var minified = Minifier.optimize(template);
 
 // files
-Minifier.minifyFiles(String|Array|Glob files, String|Array output);
+Minifier.optimizeFiles(String|Array|Glob files, String|Array output);
 
-Minifier.minifyFiles('views/foo.mask'); // output in `views/foo.min.mask`
-Minifier.minifyFiles('views/*.mask'); // output in `views/*.min.mask`
+Minifier.optimizeFiles('views/foo.mask'); // output in `views/foo.min.mask`
+Minifier.optimizeFiles('views/*.mask'); // output in `views/*.min.mask`
 
-Minifier.minifyFiles('foo.mask', '/release/foo.mask'); 
+Minifier.optimizeFiles('foo.mask', '/release/foo.mask'); 
 
 ```
 
@@ -67,4 +97,4 @@ atma plugin install mask-minify -g
 
 
 ----
-The MIT License
+:copyright: - 2015 - The Atma.js Project - MIT

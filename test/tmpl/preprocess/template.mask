@@ -1,0 +1,8 @@
+style {
+    body {
+        background: green;
+    }
+}
+script {
+    window.x = 10;
+}

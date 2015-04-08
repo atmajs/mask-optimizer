@@ -1,11 +1,8 @@
-var mask = require('maskjs');
-
-
-module.exports = {
-	minify: function(source){
-		return mask.stringify(source);
+var Minifier = {
+	process (source, opts){
+		return mask.stringify(source, opts);
 	},
-	minifyFiles: function(mix, outputs) {
+	minifyFiles (mix, outputs) {
 		var files;
 
 		if (typeof mix === 'string') {
@@ -19,20 +16,17 @@ module.exports = {
 			}
 		}
 
+		files.forEach((file, index) => {
+			if (io.File.exists(file) === false) {
+				console.error('<File not found>', file);
+				retur;
+			}
 
-		files
-			.forEach(function(file, index){
-
-				if (io.File.exists(file) === false) {
-					console.error('<File not found>', file);
-					retur;
-				}
-
-				var source = io.File.read(file),
-					minified = mask.stringify(source);
-				
-				new io.File(getOutputFile(file.uri, index, outputs)).write(minified);
-			});
+			var source = io.File.read(file),
+				minified = mask.stringify(source);
+			
+			io.File.write(getOutputFile(file.uri, index, outputs), minified);
+		});
 
 
 		function getOutputFile(uri, index, outputs) {
@@ -50,4 +44,4 @@ module.exports = {
 		}
 
 	}
-}
+};
