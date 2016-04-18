@@ -1,0 +1,5 @@
+import foo from './foo.mask';
+import * as config from './config.json' is json dynamic;
+
+header > h4 > '~[config.name]';
+section > foo;

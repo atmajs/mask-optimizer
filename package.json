@@ -13,8 +13,9 @@
     "atma-loader-babel": "^1.0.19"
   },
   "dependencies": {
-    "atma-io": "^0.2.6",
-    "maskjs": "^0.12.17"
+    "atma-io": "^0.2.16",
+    "atma-utils": "^0.1.6",
+    "maskjs": "^0.54.30"
   },
   "atma": {
     "plugins": [

@@ -1,0 +1,13 @@
+var Optimizer = require('../lib/optimizer.js');
+
+UTest({
+	'should build html package' () {
+		return Optimizer
+			.build('/test/tmpl/html/simple.html', {
+				minify: true
+			})
+			.done(pckg => {
+				
+			})
+	}
+})

@@ -3,7 +3,7 @@ var mask = require('maskjs');
 
 UTest({
 	'minify file' () {
-		
+
 		var path_ORIG = 'test/tmpl/minify/template.mask',
 			path_ORIG_TEST = 'test/tmpl/minify/template.out.mask'
 			;
@@ -14,7 +14,7 @@ UTest({
 				eq_(pckg.mask.trim(), io.File.read(path_ORIG_TEST).trim());
 			});
 	},
-	'build package' () {
+	'!build package' () {
 		return Optimizer
 			.processFile('/test/tmpl/package/template.mask', { minify: false })
 			.done(pckg => {
@@ -22,7 +22,7 @@ UTest({
 				eq_(pckg.mask, mask.stringify(expect, 4));
 			});
 	},
-	'!preprocess scripts and styles' () {
+	'preprocess scripts and styles' () {
 		// via mask
 		mask.cfg('preprocessor.style', function(str){
 			return str.replace('green', 'red');

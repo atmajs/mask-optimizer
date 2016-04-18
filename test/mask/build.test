@@ -1,0 +1,88 @@
+var Optimizer = require('../../lib/optimizer.js');
+
+var Files =  {
+	'foo.mask': `
+		import from './bar.mask' ;
+		import from './bar.html';
+		import * as Users from '/api/users' is json dynamic;
+		h1 > 'FooMask'
+	`,
+	'bar.mask': `
+		import from 'main.css';
+		import from 'main.mask';
+		h2 > 'BarMask'
+	`,
+	'main.mask': `
+		h2 > 'MainMask'
+	`,
+	'bar.html': `
+		<script src='main.js' />
+		<link rel='styleSheeT' href='main.css' />
+		<h3>BarHtml</h3>
+	`
+};
+
+UTest({
+	$before () {
+		io.File.disableCache();
+		Object.keys(Files).forEach(key => {
+			var rgx = new RegExp(key, 'i');
+			var Factory = io.File.getFactory();
+			Factory.unregisterHandler(rgx);
+			Factory.registerHandler(rgx, Class({
+				exists () { return true },
+				read () { return Files[key] }
+			}));
+		});
+	},
+	'should build mask' () {
+		var Writer = Optimizer.Writers.MemoryWriter;
+		return Optimizer
+			.build('hello/foo.mask', { Writer })
+			.done(builder => {
+				var file = Writer.memory['global.mask'];
+				is_(file, 'String');
+				has_(file, 'bar.html');
+				has_(file, 'bar.mask');
+				has_(file, 'main.mask');
+				has_(file, 'main.css');
+				hasNot_(file, 'link ');
+				hasNot_(file, 'script ');
+			});
+	},
+	'should get imports graph' () {
+		return Optimizer
+			.getAssets('foo.mask', { deep: true })
+			.done(assets => {
+				eq_(assets.length, 3);
+
+				has_(assets[0], { path: 'bar.mask' });
+				has_(assets[0].assets.length, 2);
+				has_(assets[0].assets[0], { path: 'main.css', type: 'style' });
+				has_(assets[0].assets[1], { path: 'main.mask', type: 'mask' });
+
+				has_(assets[1], { path: 'bar.html' });
+				has_(assets[1].assets.length, 2);
+				has_(assets[1].assets[0], { path: 'main.js', type: 'script' });
+				has_(assets[1].assets[1], { path: 'main.css', type: 'style' });
+
+				has_(assets[2], { path: '/api/users' });
+				eq_(assets[2].assets, null);
+			});
+	},
+	'should flattern imports graph' () {
+		return Optimizer
+			.getAssets('foo.mask', { deep: true, flattern: true })
+			.done(assets => {
+				eq_(assets.length, 6);
+
+				has_(assets[0], { path: '/api/users', type: 'data', linking: 'dynamic' });
+				has_(assets[1], { path: 'main.css' });
+				has_(assets[2], { path: 'main.js' });
+				has_(assets[3], { path: 'bar.html' });
+				has_(assets[4], { path: 'main.mask' });
+				has_(assets[5], { path: 'bar.mask' });
+
+			});
+	},
+});

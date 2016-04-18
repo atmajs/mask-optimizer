@@ -38,10 +38,12 @@ footer > foo;
 ##### Custom optimizations and preprocessors
 Optimizer itself should be defined in settings so that this library runs all optimizers via the template. For Instance `markdown` plugin can convert Markdown markup to html for better client performance.
 ```mask
-section > :md > """
-	### Hello
-	_Baz_
-"""
+section {
+	<markdown>
+	   ### Hello
+	   _Baz_
+	</markdown>
+}
 ```
 ```mask
 section > :html > """
@@ -69,7 +71,7 @@ Minifier.optimizeFiles(String|Array|Glob files, String|Array output);
 Minifier.optimizeFiles('views/foo.mask'); // output in `views/foo.min.mask`
 Minifier.optimizeFiles('views/*.mask'); // output in `views/*.min.mask`
 
-Minifier.optimizeFiles('foo.mask', '/release/foo.mask'); 
+Minifier.optimizeFiles('foo.mask', '/release/foo.mask');
 
 ```
 

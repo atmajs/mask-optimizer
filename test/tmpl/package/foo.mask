@@ -1,3 +1,5 @@
-define foo {
+import FooSub from 'foo-sub';
+define Foo {
 	h4 .foo > 'Lorem Ipsum'
+	FooSub;
 }

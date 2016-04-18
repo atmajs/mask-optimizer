@@ -1,4 +1,4 @@
-var Runner = {
+var MaskRunner = {
 	/* PACKAGE { mask, script, style } */
 	process (template, opts) {
 		var dfr = new mask.class.Deferred;
@@ -6,11 +6,11 @@ var Runner = {
 			.process(template, opts)
 			.fail(error => dfr.reject(error))
 			.done(pckg => {
-				Optimizer
+				MaskOptimizer
 					.process(pckg.mask, opts)
 					.fail(error => dfr.reject(error))
 					.done(ast => {
-						pckg.mask = Minifier.process(ast, { indent: opts.minify ? 0 : 4 });
+						pckg.mask = MaskSerializer.process(ast, { indent: opts.minify ? 0 : 4 });
 						dfr.resolve(pckg);
 					});
 			});
@@ -21,9 +21,15 @@ var Runner = {
 		if (io.File.exists(path) === false) {
 			return dfr.reject(Error('File not found: ' + path));
 		}
-		
+
 		var template = io.File.read(path, { skipHooks: true });
 		opts.filename = path;
-		return Runner.process(template, opts)
+		return MaskRunner.process(template, opts)
 	}
 };
+
+var actions = [
+	Builder,
+	MaskOptimizer,
+	MaskSerializer
+];

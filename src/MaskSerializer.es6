@@ -1,4 +1,4 @@
-var Minifier = {
+var MaskSerializer = {
 	process (source, opts){
 		return mask.stringify(source, opts);
 	},
@@ -24,22 +24,22 @@ var Minifier = {
 
 			var source = io.File.read(file),
 				minified = mask.stringify(source);
-			
+
 			io.File.write(getOutputFile(file.uri, index, outputs), minified);
 		});
 
 
 		function getOutputFile(uri, index, outputs) {
-			
+
 			if (outputs == null)
 				return uri.combine(uri.getName() + '.min.' + uri.extension);
 
 			if (Array.isArray(outputs))
 				return outputs[index] || getOutputFile(uri, index, null);
-			
-			if (typeof outputs === 'string' && outputs.slice(-1) === '/') 
+
+			if (typeof outputs === 'string' && outputs.slice(-1) === '/')
 				return new net.Uri(net.Uri.combine(outputs, uri.file));
-			
+
 			return getOutputFile(uri, index, null);
 		}
 

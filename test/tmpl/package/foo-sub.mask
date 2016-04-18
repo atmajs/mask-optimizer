@@ -1,0 +1,4 @@
+import * as config from './config.json';
+define FooSub {
+	h4 > '~config.name'
+}
